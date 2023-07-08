@@ -1,0 +1,58 @@
+{% extends './layout.html' %}
+
+{% block title %} Nuevo alumno {% endblock %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+        
+
+<h3>Nuevo alumno</h3>
+
+    <form action="{{url_for('alumno_Agregar')}}" method="POST" class="row g-3">
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Nombre(s)" name="Nombre">
+            <label for="floatingInput">Nombre(s)</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Matricula" name="Matricula">
+            <label for="floatingInput">Matricula</label>
+        </div>
+        <div class="d-flex gap-2 justify-content-center py-5">
+            <button class="btn btn-primary d-inline-flex align-items-center" type="submit">
+                Guardar
+            </button>
+            <a class="btn btn-outline-danger d-inline-flex align-items-center" href="{{url_for('alumnos_Ver')}}">
+                Cancelar
+            </a>
+          </div>
+    </form>
+{% endblock %}

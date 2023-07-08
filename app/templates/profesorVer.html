@@ -1,0 +1,9 @@
+{% extends './layout.html' %}
+
+{% block title %} Profesor {% endblock %}
+
+{% block body %}
+<h1>{{profesor.2}}</h1>
+<p>Matricula: {{profesor.1}}</p>
+<img src="{{url_for('static', filename='img/uploads/profesores/') + profesor.2}}" alt="Foto de perfil">
+{% endblock %}

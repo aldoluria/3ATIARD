@@ -1,0 +1,19 @@
+{% extends './layout.html' %}
+
+{% block title %} Nuevo profesor {% endblock %}
+
+{% block body %}
+<h3>Nuevo profesor</h3>
+    <form action="{{url_for('profesor_Agregar')}}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+        <label>Nombre(s)</label>
+        <input type="text" name="Nombre" placeholder="Nombre(s) del profesor">
+        <label>Numero de empleado</label>
+        <input type="text" name="Empleado" placeholder="Numero de empleado">
+        <label>Archivo:</label>
+        <input type="file" name="Foto" required accept="image/png, .jpeg, .jpg">
+        <button type="submit">
+            Guardar
+        </button>
+    </form>
+{% endblock %}

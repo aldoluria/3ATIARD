@@ -1,0 +1,17 @@
+{% extends './layout.html' %}
+
+{% block title %} Alumnos {% endblock %}
+
+{% block body %}
+<h3>Actualizar alumno</h3>
+    <form action="{{url_for('alumno_actualizar', id=alumno[0])}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+        <label>Nombre(s)</label>
+        <input type="text" name="Nombre" placeholder="Nombre(s)" value="{{alumno.2}}">
+        <label>Matricula</label>
+        <input type="text" name="Matricula" placeholder="Matricula" value="{{alumno.1}}">
+        <button type="submit" class="btn btn-success btn-block">
+            Guardar
+        </button>
+    </form>
+{% endblock %}
