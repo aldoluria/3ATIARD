@@ -3,8 +3,7 @@ from flask import Flask, render_template, request, url_for, redirect, flash, jso
 from flask_mysqldb import MySQL
 from flask_wtf.csrf import CSRFProtect
 from datetime import datetime
-from werkzeug.utils import secure_filename
-import pdfkit
+
 #importamos Blueprint para crear una etiqueta
 
 #Creamos una tag con la ayuda de Blueprint y la iniciamos en nuestro proyecti (al crear nuestra applicación)
@@ -25,7 +24,6 @@ ruta=app.config['UPLOAD_FOLDER']='./app/static/img/uploads/profesores'
 db = MySQL(app)
 
 app.secret_key='mysecretkey'
-app.config['PDFKIT_CMD'] = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
 
 #Usamos el nuevo tag que creamos y le asignamos una función
 @custom_tags.app_template_global()
@@ -73,16 +71,7 @@ def alumnos_Ver():
     alumnos=cur.fetchall()
     print(alumnos) 
     cur.close()
-
-    # Renderizar el template HTML con los datos obtenidos
-    html = render_template('alumnos.html', alumnos=alumnos)
-
-    # Generar el PDF a partir del HTML renderizado
-    pdfkit.from_string(html, 'alumnos.pdf')
-
-
-    #return render_template('alumnos.html', alumnos=alumnos)
-    return 'Reporte generado correctamente'
+    return render_template('alumnos.html', alumnos=alumnos)
 
 @app.route('/alumno/<string:id>')
 def ver_alumno(id):
