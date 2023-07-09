@@ -1,9 +1,10 @@
 import os
-from flask import Flask, render_template, request, url_for, redirect, flash, jsonify, Blueprint
+from flask import Flask, render_template, request, url_for, redirect, flash, jsonify, Blueprint, make_response
 from flask_mysqldb import MySQL
 from flask_wtf.csrf import CSRFProtect
 from datetime import datetime
-
+from werkzeug.utils import secure_filename
+import pdfkit
 #importamos Blueprint para crear una etiqueta
 
 #Creamos una tag con la ayuda de Blueprint y la iniciamos en nuestro proyecti (al crear nuestra applicación)
@@ -71,6 +72,7 @@ def alumnos_Ver():
     alumnos=cur.fetchall()
     print(alumnos) 
     cur.close()
+
     return render_template('alumnos.html', alumnos=alumnos)
 
 @app.route('/alumno/<string:id>')
@@ -82,7 +84,41 @@ def ver_alumno(id):
     alumno=cur.fetchall()
     print(alumno[0])
     cur.close()
+    
     return render_template('alumnoVer.html', alumno=alumno[0])
+
+#Generar PDF de Alumno en otra ventana
+@app.route('/alumno/<string:id>/PDF')
+def ver_alumno_PDF(id):
+    print(id)
+    cur=db.connection.cursor()
+    sql="SELECT * FROM alumnos WHERE idalumnos={0}".format(id)
+    cur.execute(sql)
+    alumno=cur.fetchall()
+    print(alumno[0])
+    cur.close()
+    config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+    # Renderizar el template HTML con los datos obtenidos
+    options  ={
+        'page-size' : 'Letter',
+        'margin-top' : '0px',
+        'margin-right' : '0px',
+        'margin-bottom' : '0px',
+        'margin-left' : '0px',
+        'encoding': "UTF-8",
+    }
+    html = render_template('alumnosPDF.html', alumno=alumno[0])
+    pdf = pdfkit.from_string(html, False, configuration=config, options=options)
+    response = make_response(pdf)
+    response.headers["Content-Type"] = "application/pdf"
+    response.headers["Content-Disposition"] = "inline; filename=AlumnoPDF.pdf"
+    return response
+    # Generar el PDF a partir del HTML renderizado
+    #pdfkit.from_string(html, 'alumnoVer.pdf', configuration=config, options=options)
+
+    #return 'Reporte generado correctamente'
+
+    #return render_template('alumnoVer.html', alumno=alumno[0])
 
 #Create (Crear)
 @app.route('/alumno/nuevo')

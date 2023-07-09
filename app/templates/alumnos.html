@@ -23,7 +23,7 @@
 {% endwith %}
 
 <h1>Informacion de alumnos</h1>
-<a href="{{url_for('alumno_Crear')}}" class="btn btn-primary rounded-pill px-3 my-2"><i class="fa-solid fa-circle-plus"></i>  Nuevo Alumno</a>
+<a href="{{url_for('alumno_Crear')}}" class="btn btn-primary rounded-pill px-3 my-2"><i class="fa-solid fa-plus"></i>  Nuevo Alumno</a>
 
 
 
@@ -32,6 +32,7 @@
     <tr>
       <th class="text-center">Editar</th>
       <th class="text-center">Ver</th>
+      <th class="text-center">Descargar</th>
       <th>ID</th>
       <th>Matricula</th>
       <th>Nombre</th>
@@ -39,12 +40,13 @@
     </tr>
     {% for alumno in alumnos %}
     <tr>
-      <td class="text-center"><a href="{{url_for('editar_alumno', id=alumno[0])}}"><i class="fa-solid fa-pen"></a></i></a></td>
-      <td class="text-center"><a href="{{url_for('ver_alumno', id=alumno[0])}}"><i class="fa-sharp fa-solid fa-eye"></i></a></td>
+      <td class="text-center"><a href="{{url_for('editar_alumno', id=alumno[0])}}" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a></td>
+      <td class="text-center"><a href="{{url_for('ver_alumno', id=alumno[0])}}" class="btn btn-primary"><i class="fa-regular fa-eye"></i></a></td>
+      <td class="text-center"><a href="{{url_for('ver_alumno_PDF', id=alumno[0])}}" target="_blank" class="btn btn-danger"><i class="fa-regular fa-file-pdf"></i></a></td>
       <td>{{ alumno[0] }}</td>
       <td>{{ alumno[1] }}</td>
       <td>{{ alumno[2] }}</td>
-      <td class="text-center"><a href="{{url_for('eliminar_alumno', id=alumno[0])}}" class="btn-delete"><i class="fa-solid fa-trash-can" style="color: red;"></i></a></td>
+      <td class="text-center"><a href="{{url_for('eliminar_alumno', id=alumno[0])}}" class="btn btn-danger btn-delete"><i class="fa-regular fa-trash-can"></i></a></td>
     </tr>
         {% endfor %}
 </table>
