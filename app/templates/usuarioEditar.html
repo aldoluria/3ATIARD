@@ -1,0 +1,19 @@
+{% extends './layout.html' %}
+
+{% block title %} Usuarios {% endblock %}
+
+{% block body %}
+<h3>Actualizar usuario</h3>
+    <form action="{{url_for('usuario_actualizar', id=usuario[0])}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+        <label>Username</label>
+        <input type="text" name="Username" placeholder="Username" value="{{usuario.1}}">
+        <label>Password</label>
+        <input type="password" name="Password" placeholder="Password" value="{{usuario.2}}">
+        <label>Tipo Usuario</label>
+        <input type="text" name="TipoUsuario" placeholder="Tipo Usuario" value="{{usuario.3}}">
+        <button type="submit" class="btn btn-success btn-block">
+            Guardar
+        </button>
+    </form>
+{% endblock %}

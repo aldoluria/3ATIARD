@@ -1,6 +1,6 @@
 {% extends './layout.html' %}
 
-{% block title %} Nuevo alumno {% endblock %}
+{% block title %} Nuevo Usuario {% endblock %}
 
 {% block body %}
 
@@ -15,23 +15,27 @@
   {% endif %}
 {% endwith %}
 
-<h3>Nuevo alumno</h3>
+<h3>Nuevo usuario</h3>
 
-    <form action="{{url_for('alumno_Agregar')}}" method="POST" class="row g-3">
+    <form action="{{url_for('usuario_Agregar')}}" method="POST" class="row g-3">
         <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Nombre(s)" name="Nombre">
-            <label for="floatingInput">Nombre(s)</label>
+            <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="Username">
+            <label for="floatingInput">Username</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingInput" placeholder="Password" name="Password">
+            <label for="floatingInput">Password</label>
           </div>
           <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Matricula" name="Matricula">
-            <label for="floatingInput">Matricula</label>
+            <input type="text" class="form-control" id="floatingInput" placeholder="Tipo Usuario" name="TipoUsuario">
+            <label for="floatingInput">Tipo Usuario</label>
         </div>
         <div class="d-flex gap-2 justify-content-center py-5">
             <button class="btn btn-primary d-inline-flex align-items-center" type="submit">
                 Guardar
             </button>
-            <a class="btn btn-outline-danger d-inline-flex align-items-center" href="{{url_for('alumnos_Ver')}}">
+            <a class="btn btn-outline-danger d-inline-flex align-items-center" href="{{url_for('usuarios_Ver')}}">
                 Cancelar
             </a>
           </div>
