@@ -37,15 +37,16 @@
                 <li class="nav-item">
                     <a class="nav-link disabled">Calificaciones</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('login')}}">Login</a>
-                </li>
+                
+                {% if current_user.idusuarios %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
                 </li>
+                {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{current_user.username}}</a>
+                    <a class="nav-link" href="{{url_for('login')}}">Login</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
 

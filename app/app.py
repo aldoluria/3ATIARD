@@ -7,6 +7,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
 from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_paginate import Pagination, get_page_parameter
 
 from Models.ModelUser import ModuleUser
 from Models.entities.user import User
@@ -82,7 +83,44 @@ def index():
 
 # ---------------------------------------------- Apartado CRUD de Alumnos ---------------------------------------------
 #Read (Leer)
+
+PER_PAGE = 25
+def alumnos_Paginar(page):
+    cur=db.connection.cursor()
+
+    # Ejemplo de consulta paginada (ajusta esto según la estructura de tu tabla)
+    offset = (page - 1) * PER_PAGE
+    sql = "SELECT * FROM profesores LIMIT %s OFFSET %s"
+    cur.execute(sql, (PER_PAGE, offset))
+
+    # Obtenemos los resultados y los almacenamos en una lista
+    resultados_pagina_actual = cur.fetchall()
+
+    # Consulta para obtener el total de resultados (sin paginación)
+    sql_total = "SELECT COUNT(*) FROM profesores"
+    cur.execute(sql_total)
+    total_results = cur.fetchone()[0]
+
+    cur.close()
+
+    return resultados_pagina_actual, total_results
+
 @app.route('/alumnos')
+@login_required
+def alumnos_Ver():
+    # Obtener la página actual del paginador
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+
+    # Obtener los resultados de la página actual y el total de resultados
+    resultados_pagina_actual, total_results = alumnos_Paginar(page)
+
+    # Generar el objeto de paginación
+    pagination = Pagination(page=page, per_page=PER_PAGE, total=total_results, outer_window=20, inner_window=20)
+
+    return render_template('alumnos.html', pagination=pagination, alumnos=resultados_pagina_actual)
+
+
+"""@app.route('/alumnos')
 @login_required
 def alumnos_Ver():
     cur=db.connection.cursor()
@@ -93,7 +131,7 @@ def alumnos_Ver():
     cur.close()
 
     return render_template('alumnos.html', alumnos=alumnos)
-
+"""
 @app.route('/alumno/<string:id>')
 @login_required
 def ver_alumno(id):
