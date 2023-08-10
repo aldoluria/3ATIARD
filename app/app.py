@@ -1,5 +1,5 @@
 import os
-import pdfkit
+#import pdfkit
 from flask import Flask, render_template, request, url_for, redirect, flash, jsonify, Blueprint, make_response
 from flask_mysqldb import MySQL
 from flask_wtf.csrf import CSRFProtect
@@ -21,7 +21,8 @@ csrf=CSRFProtect()
 
 # Conexión MySQL
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_USER'] = 'luria'
+#app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'password'
 app.config['MYSQL_DB'] = 'tiard'
 
@@ -146,6 +147,7 @@ def ver_alumno(id):
     return render_template('alumnoVer.html', alumno=alumno[0])
 
 #Generar PDF de Alumno en otra ventana
+""""
 @app.route('/alumno/<string:id>/PDF')
 @login_required
 def ver_alumno_PDF(id):
@@ -178,7 +180,7 @@ def ver_alumno_PDF(id):
     #return 'Reporte generado correctamente'
 
     #return render_template('alumnoVer.html', alumno=alumno[0])
-
+"""
 #Create (Crear)
 @app.route('/alumno/nuevo')
 @login_required
