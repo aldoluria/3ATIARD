@@ -27,7 +27,7 @@ app.config['MYSQL_PASSWORD'] = 'password'
 app.config['MYSQL_DB'] = 'tiard'
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-ruta=app.config['UPLOAD_FOLDER']='./app/static/img/uploads/profesores'
+ruta=app.config['UPLOAD_FOLDER']='./app/static/img/uploads/alumnos'
 
 db = MySQL(app)
 
